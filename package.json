@@ -1,0 +1,38 @@
+{
+  "name": "shush-cli",
+  "version": "0.0.0",
+  "description": "Keep your secrets to yourself",
+  "bin": {
+    "shush": "./bin/shush"
+  },
+  "scripts": {
+    "test": "standard && standard bin/* && tap test/*.js",
+    "prepublishOnly": "npm t",
+    "postpubilsh": "git push && git push --tags"
+  },
+  "author": "Wes Todd",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "wesleytodd/shush-cli"
+  },
+  "dependencies": {
+    "depcheck": "^0.6.8",
+    "dotenv": "^4.0.0",
+    "loggerr": "^1.9.0",
+    "minimist": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "once": "^1.4.0",
+    "password-prompt": "^1.0.3",
+    "pump": "^2.0.0",
+    "recursive-readdir": "^2.2.1",
+    "rimraf": "^2.6.2",
+    "run-parallel": "^1.1.6",
+    "tar-stream": "^1.5.5",
+    "through2": "^2.0.3"
+  },
+  "devDependencies": {
+    "standard": "^10.0.3",
+    "tap": "^11.0.1"
+  }
+}

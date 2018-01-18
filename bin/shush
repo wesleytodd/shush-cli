@@ -1,0 +1,94 @@
+#! /usr/bin/env node
+'use strict'
+
+const path = require('path')
+const Logger = require('loggerr')
+const pkg = require('../package.json')
+
+const args = require('minimist')(process.argv.slice(2), {
+  boolean: ['help', 'version'],
+  string: ['cwd', 'secret', 'input', 'output', 'logLevel'],
+  alias: {
+    'version': 'v',
+    'secret': 's',
+    'cwd': 'c',
+    'input': 'i',
+    'output': 'o',
+    'logLevel': 'l'
+  },
+  default: {
+    cwd: process.cwd(),
+    logLevel: 'info'
+  },
+  '--': true
+})
+
+// Create logger
+var log = new Logger({
+  level: Logger.levels.indexOf(args.logLevel),
+  formatter: require('loggerr/formatters/cli')
+})
+
+// Load .env
+require('dotenv').config({
+  path: path.resolve(args.cwd, '.env')
+})
+
+// Command is the first of the rest args
+var cmd = args._.shift()
+
+// Version?
+if (args.version) {
+  cmd = 'version'
+}
+
+// Set password from command line
+var secret = args.secret || process.env.SHUSH_SECRET
+if (args.secret) {
+  log.warning('Use of --secret is discouraged. Use `shush secret` instead.')
+}
+
+switch (cmd) {
+  // Pack and Unpack have the same arguments
+  case 'pack':
+  case 'unpack':
+    // Require secret
+    if (!secret) {
+      log.error(new TypeError('secret is required'))
+      process.exit(1)
+    }
+
+    var command = require(`../lib/commands/${cmd}`)
+    if (args.help) {
+      log.info(command.help())
+      break
+    }
+    command({
+      logger: log,
+      secret: secret,
+      ...args
+    })
+    break
+
+  // Set secret in .env file
+  case 'secret':
+    require(`../lib/commands/secret`)({
+      logger: log,
+      ...args
+    })
+    break
+
+  // Dispaly version
+  case 'version':
+    log.info(pkg.version)
+    break
+
+  // Help command or no command, print help text
+  default:
+    if (typeof cmd !== 'undefined' && cmd !== 'help') {
+      log.info(`Command not found: ${cmd}`)
+    }
+
+    log.info(require(`../lib/commands/help`)())
+    break
+}
