@@ -72,7 +72,7 @@ switch (cmd) {
 
   // Set secret in .env file
   case 'secret':
-    require(`../lib/commands/secret`)({
+    require('../lib/commands/secret')({
       logger: log,
       ...args
     })
@@ -89,6 +89,6 @@ switch (cmd) {
       log.info(`Command not found: ${cmd}`)
     }
 
-    log.info(require(`../lib/commands/help`)())
+    log.info(require('../lib/commands/help')())
     break
 }

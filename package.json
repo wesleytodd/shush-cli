@@ -7,6 +7,7 @@
   },
   "scripts": {
     "test": "standard && standard bin/* && tap test/*.js",
+    "ci-test": "standard && standard bin/* && tap --grep=\"NOTCI\" -i test/*.js",
     "prepublishOnly": "npm t",
     "postpubilsh": "git push && git push --tags"
   },

@@ -38,7 +38,7 @@ tap.test('pack and unpack a file', function (t) {
   })
 })
 
-tap.test('should set a secret in a .env file', function (t) {
+tap.test('NOTCI should set a secret in a .env file', function (t) {
   var p = secret(TMP, [], function (err, out, code) {
     t.error(err)
     fs.readFile(path.join(TMP, '.env'), 'utf8', function (err, content) {
