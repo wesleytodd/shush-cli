@@ -1,6 +1,6 @@
 {
   "name": "shush-cli",
-  "version": "1.0.0-2",
+  "version": "1.0.0-3",
   "description": "Keep your secrets to yourself",
   "bin": {
     "shush": "./bin/shush"
