@@ -16,7 +16,7 @@ $ shush
     Keep secrets protected by a password and strong encryption
 
     Usage:
-	  shush secret [<options>]
+      shush secret [<options>]
       shush pack [<options>] --output=<output file> <input files...>
       shush pack [<options>] --output=<output file> -- <input files...>
       shush pack [<options>] <input files...> > <output file>
